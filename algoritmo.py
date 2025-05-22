@@ -1,8 +1,8 @@
 import random
 
-# ===================
+# ================= 
 # CONFIGURAÇÕES
-# ===================
+# ================= 
 N = 8  # número de rainhas que estarão presentes no tabuleiro
 TAMANHO_POPULACAO = 100
 MAXIMO_GERACOES = 200
@@ -13,12 +13,17 @@ TAMANHO_TORNEIO = 5
 # FUNÇÕES DO ALGORITMO
 # =======================
 
-# Criar um indivíduo aleatório
 def criar_individuo():
+    """
+    Cria um indivíduo aleatório representado por uma lista de inteiros, onde cada índice representa uma coluna e o valor representa a linha onde a rainha está posicionada.
+    """    
     return [random.randint(0, N - 1) for _ in range(N)]
 
-# Calcular fitness: número de pares de rainhas se atacando
 def avaliacao(individuo):
+    """
+    Calcula a função de avaliação (fitness), contando quantos pares de rainhas se atacam, seja na mesma linha ou na mesma diagonal.
+    """
+    
     ataques = 0
     for i in range(N):
         for j in range(i + 1, N):
@@ -28,20 +33,26 @@ def avaliacao(individuo):
                 ataques += 1  # mesma diagonal
     return ataques
 
-# Seleção por torneio
 def selecao_torneio(populacao):
+    """
+    Seleciona um indivíduo da população utilizando o método de torneio, onde um subconjunto aleatório da população é avaliado e o melhor entre eles é selecionado.
+    """
     torneio = random.sample(populacao, TAMANHO_TORNEIO)
     torneio.sort(key=lambda ind: avaliacao(ind))
     return torneio[0]
 
-# Cruzamento: crossover de um ponto
 def cruzamento(pai1, pai2):
+    """
+    Realiza o cruzamento (crossover) de um ponto entre dois pais, combinando partes de ambos para gerar um novo indivíduo (filho).
+    """
     ponto = random.randint(1, N - 1)
     filho = pai1[:ponto] + pai2[ponto:]
     return filho
 
-# Mutação: alterar uma posição aleatória
 def mutacao(individuo):
+    """
+    Aplica mutação a um indivíduo com uma determinada probabilidade, alterando a posição de uma das rainhas para uma linha aleatória na mesma coluna.
+    """
     if random.random() < TAXA_MUTACAO:
         coluna = random.randint(0, N - 1)
         linha = random.randint(0, N - 1)
@@ -51,6 +62,9 @@ def mutacao(individuo):
 # LOOP PRINCIPAL DO ALGORITMO
 # =============================
 def algoritmo_genetico():
+    """
+    Executa o algoritmo genético para resolver o problema das N rainhas, evoluindo a população ao longo das gerações até encontrar uma solução sem conflitos ou atingir o número máximo de gerações.
+    """
     # Criar população inicial
     populacao = [criar_individuo() for _ in range(TAMANHO_POPULACAO)]
 
@@ -88,8 +102,10 @@ def algoritmo_genetico():
     print("Nenhuma solução perfeita encontrada.")
     return None
 
-# Função para imprimir o tabuleiro
 def imprimir_tabuleiro(solucao):
+    """
+    Exibe graficamente o tabuleiro com as posições das rainhas, marcando com 'Q' as posições ocupadas e '.' as posições vazias.
+    """
     # Borda superior
     print(" +" + "---" * N + "+")
 
@@ -111,10 +127,13 @@ def imprimir_tabuleiro(solucao):
     print(numeros_colunas)
     print()
 
-# =======================
+# ============
 # EXECUÇÃO
-# =======================
+# ============
 if __name__ == "__main__":
+    """
+    Inicia a execução do algoritmo genético e imprime o tabuleiro se uma solução for encontrada.
+    """
     solucao = algoritmo_genetico()
     if solucao:
         print("Solução final:", solucao)
