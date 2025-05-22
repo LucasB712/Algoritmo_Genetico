@@ -2,6 +2,11 @@
 
 Este projeto implementa uma solução para o clássico **Problema das N Rainhas** utilizando um **Algoritmo Genético (AG)**. O objetivo é posicionar N rainhas em um tabuleiro NxN de forma que **nenhuma rainha ataque outra** (nem na mesma linha, coluna ou diagonal).
 
+
+<img width="314" alt="image" src="https://github.com/user-attachments/assets/8ad37cf0-893b-44ac-b604-fb081e64eea6" />
+
+
+
 ---
 
 ## 📚 Sobre o Problema
